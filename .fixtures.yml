@@ -3,6 +3,4 @@
 ---
 fixtures:
   forge_modules:
-    systemd:
-      ref: 1.1.1
-      repo: https://github.com/camptocamp/puppet-systemd.git
+    systemd: "camptocamp/systemd"
