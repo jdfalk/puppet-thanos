@@ -71,13 +71,13 @@
 class thanos::store (
     String  $log_level                 = 'info',
     String  $gcloudtrace_project       = '',
-    String  $gcloudtrace_sample_factor = 0,
-    String  $grpc_port                 = 11901,
+    Integer $gcloudtrace_sample_factor = 0,
+    Integer $grpc_port                 = 11901,
     String  $grpc_address              = "0.0.0.0:${grpc_port}",
     String  $grpc_advertise_address    = '',
-    String  $http_port                 = 11902,
+    Integer $http_port                 = 11902,
     String  $http_address              = "0.0.0.0:${http_port}",
-    String  $cluster_port              = 11900,
+    Integer $cluster_port              = 11900,
     String  $cluster_address           = "0.0.0.0:${cluster_port}",
     String  $cluster_advertise_address = '',
     Array   $cluster_peers             = [],
@@ -95,6 +95,7 @@ class thanos::store (
     String  $index_cache_size          = '250MB',
     String  $chunk_pool_size           = '2GB',
 ) {
+  include systemd
   include thanos::install
 
   systemd::unit_file { 'thanos-store.service':

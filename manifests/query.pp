@@ -49,24 +49,25 @@
 class thanos::query (
     String  $log_level                     = 'info',
     String  $gcloudtrace_project           = '',
-    String  $gcloudtrace_sample_factor     = 0,
-    String  $grpc_port                     = 12901,
+    Integer $gcloudtrace_sample_factor     = 0,
+    Integer $grpc_port                     = 11901,
     String  $grpc_address                  = "0.0.0.0:${grpc_port}",
     String  $grpc_advertise_address        = '',
-    String  $http_port                     = 12902,
+    Integer $http_port                     = 11902,
     String  $http_address                  = "0.0.0.0:${http_port}",
-    String  $cluster_port                  = 12900,
+    Integer $cluster_port                  = 11900,
     String  $cluster_address               = "0.0.0.0:${cluster_port}",
     String  $cluster_advertise_address     = '',
     Array   $cluster_peers                 = [],
     String  $cluster_gossip_interval       = '5s',
     String  $cluster_pushpull_interval     = '5s',
     String  $query_timeout                 = '2m',
-    String  $query_max_concurrent          = 20,
+    Integer $query_max_concurrent          = 20,
     String  $query_replica_label           = 'prometheus_replica',
     Array   $selector_label                = [],
     Array   $store                         = [],
 ) {
+  include systemd
   include thanos::install
   systemd::unit_file { 'thanos-query.service':
   content => "

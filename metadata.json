@@ -2,11 +2,14 @@
   "name": "jdfalk-thanos",
   "version": "0.1.0",
   "author": "jdfalk",
-  "summary": "",
+  "summary": "Puppet module for Thanos: Highly available Prometheus setup with long term storage capabilities.",
   "license": "Apache-2.0",
-  "source": "",
+  "source": "https://github.com/jdfalk/puppet-thanos.git",
   "dependencies": [
-
+    {
+      "name": "systemd",
+      "version_requirement": ">= 1.0.0"
+    }
   ],
   "operatingsystem_support": [
     {
