@@ -1,6 +1,6 @@
 # thanos::install
 #
-# A description of what this class does
+# Install's Thanos
 #
 # @summary A short summary of the purpose of this class
 #
