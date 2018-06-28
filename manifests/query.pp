@@ -69,12 +69,14 @@ class thanos::query (
 ) {
   include systemd
   include thanos::install
-  file { '/etc/systemd/system/thanos-query.service':
-    ensure  => present,
-    owner   => 'root',
-    group   => 'root',
-    mode    => '0644',
-    content => "
+  # TODO(jfalk): Fix this mess and just include it in the unit file directly.
+  $cluster_peers_config_list = []
+  $cluster_peers.each |String $cluster_peers| {
+    concat($cluster_peers_config_list, ["--cluster.peers ${cluster_peers} \\"])
+  }
+
+  systemd::unit_file { 'thanos-query.service':
+  content => "
 ### Managed by Puppet ###
 [Unit]
 Description=Prometheus Thanos Subsystem
@@ -94,39 +96,12 @@ Restart=always
 [Install]
 WantedBy=multi-user.target",
 
-  } ~> Class['systemd::systemctl::daemon_reload']
-  service {'thanos-query':
-    ensure    => 'running',
-    enable    => true,
-    subscribe => File['/etc/systemd/system/thanos-query.service'],
+  } ~> service {'thanos-query':
+  ensure => 'running',
+  enable => true,
 }
 
-  # # Open up the thanos ports
-  # ::functions::firewall_rule { '100 profiles::thanos::query gossip':
-  #   dest_port => $cluster_port,
-  #   ipset     => 'entire_internal_cloud',
-  #   options   => {
-  #     iniface => $::facts['interfaces_private'][0]
-  #   }
-  # }
 
-  # # Open up the thanos ports
-  # ::functions::firewall_rule { '100 profiles::thanos::query thanos grpc':
-  #   dest_port => $grpc_port,
-  #   ipset     => 'entire_internal_cloud',
-  #   options   => {
-  #     iniface => $::facts['interfaces_private'][0]
-  #   }
-  # }
-
-  #   # Open up the thanos ports
-  # ::functions::firewall_rule { '100 profiles::thanos::query thanos http':
-  #   dest_port => $http_port,
-  #   ipset     => 'entire_internal_cloud',
-  #   options   => {
-  #     iniface => $::facts['interfaces_private'][0]
-  #   }
-  # }
 
 
 }

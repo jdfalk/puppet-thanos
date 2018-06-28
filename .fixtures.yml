@@ -6,5 +6,4 @@ fixtures:
     systemd: "camptocamp/systemd"
     stdlib: "puppetlabs/stdlib"
     inifile: "puppetlabs/inifile"
-    firewall: "puppetlabs/firewall"
  
