@@ -5,7 +5,6 @@ fixtures:
   forge_modules:
     systemd: "camptocamp/systemd"
     stdlib: "puppetlabs/stdlib"
-  repositories:
-    firewall:
-      ref: 1.8.2
-      repo: https://stash.cudaops.com/scm/pup/puppetlabs-firewall.git
+    inifile: "puppetlabs/inifile"
+    firewall: "puppetlabs/firewall"
+ 

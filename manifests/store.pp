@@ -98,8 +98,12 @@ class thanos::store (
   include systemd
   include thanos::install
 
-  systemd::unit_file { 'thanos-store.service':
-  content => "
+  file {'/etc/systemd/system/thanos-store.service':
+    ensure  => present,
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0644',
+    content => "
 ### Managed by Puppet ###
 [Unit]
 Description=Prometheus Thanos Subsystem
@@ -123,36 +127,39 @@ Restart=always
 [Install]
 WantedBy=multi-user.target",
 
-  } ~> service {'thanos-store':
-  ensure => 'running',
-  enable => true,
-}
+  } ~> Class['systemd::systemctl::daemon_reload']
 
-  # Open up the thanos ports
-  ::functions::firewall_rule { '100 profiles::thanos::store gossip':
-    dest_port => $cluster_port,
-    ipset     => 'entire_internal_cloud',
-    options   => {
-      iniface => $::facts['interfaces_private'][0]
-    }
+  service {'thanos-store':
+    ensure    => 'running',
+    enable    => true,
+    subscribe => File['/etc/systemd/system/thanos-store.service'],
   }
 
-  # Open up the thanos ports
-  ::functions::firewall_rule { '100 profiles::thanos::store grpc':
-    dest_port => $grpc_port,
-    ipset     => 'entire_internal_cloud',
-    options   => {
-      iniface => $::facts['interfaces_private'][0]
-    }
-  }
+  # # Open up the thanos ports
+  # ::functions::firewall_rule { '100 profiles::thanos::store gossip':
+  #   dest_port => $cluster_port,
+  #   ipset     => 'entire_internal_cloud',
+  #   options   => {
+  #     iniface => $::facts['interfaces_private'][0]
+  #   }
+  # }
 
-    # Open up the thanos ports
-  ::functions::firewall_rule { '100 profiles::thanos::store http':
-    dest_port => $http_port,
-    ipset     => 'entire_internal_cloud',
-    options   => {
-      iniface => $::facts['interfaces_private'][0]
-    }
-  }
+  # # Open up the thanos ports
+  # ::functions::firewall_rule { '100 profiles::thanos::store grpc':
+  #   dest_port => $grpc_port,
+  #   ipset     => 'entire_internal_cloud',
+  #   options   => {
+  #     iniface => $::facts['interfaces_private'][0]
+  #   }
+  # }
+
+  #   # Open up the thanos ports
+  # ::functions::firewall_rule { '100 profiles::thanos::store http':
+  #   dest_port => $http_port,
+  #   ipset     => 'entire_internal_cloud',
+  #   options   => {
+  #     iniface => $::facts['interfaces_private'][0]
+  #   }
+  # }
 
 }
