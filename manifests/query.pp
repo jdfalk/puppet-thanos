@@ -70,10 +70,10 @@ class thanos::query (
   include systemd
   include thanos::install
   # TODO(jfalk): Fix this mess and just include it in the unit file directly.
-  $cluster_peers_config_list = []
-  $cluster_peers.each |String $cluster_peers| {
-    concat($cluster_peers_config_list, ["--cluster.peers ${cluster_peers} \\"])
-  }
+  # $cluster_peers_config_list = []
+  # $cluster_peers.each |String $cluster_peers| {
+  #   concat($cluster_peers_config_list, ["--cluster.peers ${cluster_peers} \\"])
+  # }
 
   systemd::unit_file { 'thanos-query.service':
   content => "
@@ -85,6 +85,7 @@ After=basic.target network.target
 
 [Service]
 ExecStart=/usr/bin/thanos query \\
+
   --cluster.peers prometheus1.bco.tym.cudaops.com:10900 \\
   --cluster.peers prometheus.cudaops.com:10900 \\
   --cluster.peers prometheusstorage0.bco.tym.cudaops.com:10900 \\
