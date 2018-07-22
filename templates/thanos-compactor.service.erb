@@ -1,0 +1,59 @@
+# This file managed by Puppet
+# Template Path: <%= @module_name %>/templates/thanos-compactor.service
+### Managed by Puppet ###
+[Unit]
+Description=Prometheus Thanos Subsystem
+Wants=basic.target
+After=basic.target network.target
+
+[Service]
+User=<%=@user%>
+Group=prometheus
+Environment='S3_SECRET_KEY=<%=@s3_secret_key%>'
+ExecStart=/usr/bin/thanos compact \
+<%- if @log_level -%>
+  --log.level=<%=@log_level%> \
+<% end -%>
+<%- if @gcloudtrace_project -%>
+  --gcloudtrace.project=<%=@gcloudtrace_project%> \
+<%- end -%>
+<%- if @gcloudtrace_sample_factor -%>
+  --gcloudtrace.sample-factor=<%=@gcloudtrace_sample_factor%> \
+<%- end -%>
+<%- if @http_address -%>
+  --http-address=<%=@http_address%> \
+<%- end -%>
+<%- if @data_dir -%>
+  --data-dir=<%=@data_dir%>
+<%- end -%>
+<%- if @gcs_bucket -%>
+  --gcs.bucket=<%=@gcs_bucket%> \
+<%- end -%>
+<%- if @s3_bucket -%>
+  --s3.bucket=<%=@s3_bucket%>
+<%- end -%>
+<%- if @s3_endpoint -%>
+  --s3.endpoint=<%=@s3_endpoint%>
+<%- end -%>
+<%- if @s3_access_key -%>
+  --s3.access-key=<%=@s3_access_key%>
+<%- end -%>
+<%- if @s3_insecure -%>
+  --s3.insecure
+<%- end -%>
+<%- if @s3_signature_version2 -%>
+  --s3.signature-version2
+<%- end -%>
+<%- if @s3_encrypt_sse -%>
+  --s3.encrypt-sse
+<%- end -%>
+<%- if @sync_delay -%>
+  --sync-delay=<%=@sync_delay%> \
+<%- end -%>
+<%- if @wait -%>
+  --wait
+<%- end -%>
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

@@ -45,41 +45,34 @@
 #   will increase convergence speeds across larger clusters at the expense of 
 #   increased bandwidth usage.
 # @example
-#   include thanos::query
-class thanos::query (
-    String  $log_level                     = 'info',
-    String  $gcloudtrace_project           = '',
-    Integer $gcloudtrace_sample_factor     = 0,
-    Integer $grpc_port                     = 11901,
-    String  $grpc_address                  = "0.0.0.0:${grpc_port}",
-    String  $grpc_advertise_address        = '',
-    Integer $http_port                     = 11902,
-    String  $http_address                  = "0.0.0.0:${http_port}",
-    Integer $cluster_port                  = 11900,
-    String  $cluster_address               = "0.0.0.0:${cluster_port}",
-    String  $cluster_advertise_address     = '',
-    Array   $cluster_peers                 = [],
-    String  $cluster_gossip_interval       = '5s',
-    String  $cluster_pushpull_interval     = '5s',
-    String  $query_timeout                 = '2m',
-    Integer $query_max_concurrent          = 20,
-    String  $query_replica_label           = 'prometheus_replica',
-    Array   $selector_label                = [],
-    Array   $store                         = [],
+#   include thanos
+class thanos (
+    Boolean $manage_user                   = true,
+    Boolean $manage_group                  = true,
+    String  $user                          = 'thanos',
+    String  $group                         = 'thanos',
+    String  $extra_groups                  = 'prometheus',
 ) {
-  include systemd
-  include thanos
-  include thanos::install
 
-  systemd::unit_file { 'thanos-query.service':
-  content => template('thanos-query.service.erb'),
+  if $thanos::manage_user {
+    ensure_resource('user', [ $thanos::user ], {
+      ensure => 'present',
+      system => true,
+      groups => $thanos::extra_groups,
+    })
 
-  } ~> service {'thanos-query':
-  ensure => 'running',
-  enable => true,
+    if $thanos::manage_group {
+      Group[$thanos::group] -> User[$thanos::user]
+    }
+  }
+  if $thanos::manage_group {
+    ensure_resource('group', [ $thanos::group ],{
+      ensure => 'present',
+      system => true,
+    })
+  }
+
+
 }
 
 
-
-
-}

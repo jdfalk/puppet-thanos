@@ -73,19 +73,19 @@ class thanos::sidecar (
     String  $log_level                     = 'info',
     String  $gcloudtrace_project           = '',
     Integer $gcloudtrace_sample_factor     = 0,
-    Integer $grpc_port                     = 11901,
+    Integer $grpc_port                     = 10901,
     String  $grpc_address                  = "0.0.0.0:${grpc_port}",
     String  $grpc_advertise_address        = '',
-    Integer $http_port                     = 11902,
+    Integer $http_port                     = 10902,
     String  $http_address                  = "0.0.0.0:${http_port}",
-    Integer $cluster_port                  = 11900,
+    Integer $cluster_port                  = 10900,
     String  $cluster_address               = "0.0.0.0:${cluster_port}",
     String  $cluster_advertise_address     = '',
     Array   $cluster_peers                 = [],
     String  $cluster_gossip_interval       = '5s',
     String  $cluster_pushpull_interval     = '5s',
     String  $prometheus_url                = 'http://localhost:9090',
-    String  $tsdb_path                     = '/var/data/prometheus',
+    String  $tsdb_path                     = '',
     String  $gcs_bucket                    = '',
     String  $s3_bucket                     = 'prometheus',
     String  $s3_endpoint                   = '',
@@ -100,33 +100,11 @@ class thanos::sidecar (
 
 ) {
   include systemd
+  include thanos
   include thanos::install
 
   systemd::unit_file { 'thanos.service':
-  content => "
-### Managed by Puppet ###
-[Unit]
-Description=Prometheus Thanos Subsystem
-Wants=basic.target
-After=basic.target network.target
-
-[Service]
-Environment=\'S3_SECRET_KEY=${s3_secret_key}\'
-ExecStart=/usr/bin/thanos sidecar \\
-  --tsdb.path=${tsdb_path} \\
-  --cluster.peers prometheus1.bco.tym.cudaops.com:10900 \\
-  --cluster.peers prometheus.cudaops.com:10900 \\
-  --cluster.peers prometheusstorage0.bco.tym.cudaops.com:10900 \\
-  --cluster.peers prometheus0.bco.tor.cudaops.com:10900 \\
-  --s3.endpoint prometheusstorage1.bco.tym.cudaops.com:9000 \\
-  --s3.bucket ${s3_bucket} \\
-  --s3.access-key ${s3_access_key} \\
-  --s3.insecure \\
-  --log.level=${log_level}
-Restart=always
-
-[Install]
-WantedBy=multi-user.target",
+  content => template('thanos.service.erb'),
 
   } ~> service {'thanos':
   ensure => 'running',

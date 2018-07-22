@@ -1,0 +1,77 @@
+# This file managed by Puppet
+# Template Path: <%= @module_name %>/templates/thanos-query.service
+### Managed by Puppet ###
+[Unit]
+Description=Prometheus Thanos Subsystem
+Wants=basic.target
+After=basic.target network.target
+
+[Service]
+ExecStart=/usr/bin/thanos query \
+<%- if @log_level -%>
+  --log.level=<%=@log_level%> \
+<% end -%>
+<%- if @gcloudtrace_project -%>
+  --gcloudtrace.project=<%=@gcloudtrace_project%> \
+<%- end -%>
+<%- if @gcloudtrace_sample_factor -%>
+  --gcloudtrace.sample-factor=<%=@gcloudtrace_sample_factor%> \
+<%- end -%>
+<%- if @grpc_address -%>
+  --grpc-address=<%=@grpc_address%> \
+<%- end -%>
+<%- if @grpc_advertise_address -%>
+  --grpc-advertise-address=<%=@grpc_advertise_address%> \
+<%- end -%>
+<%- if @http_address -%>
+  --http-address=<%=@http_address%> \
+<%- end -%>
+<%- if @http_advertise_address -%>
+  --http-advertise-address=<%=@http_advertise_address%> \
+<%- end -%>
+<%- if @cluster_address -%>
+  --cluster.address=<%=@cluster_address%> \
+<%- end -%>
+<%- if @cluster_advertise_address -%>
+  --cluster.advertise-address=<%=@cluster_advertise_address%> \
+<%- end -%>
+<%- if @cluster_peers -%>
+  <% @cluster_peers.each do |val| -%>
+  --cluster.peers=<%= val %> \
+  <% end -%>
+<%- end -%>
+<%- if @cluster_gossip_interval -%>
+  --cluster.gossip-interval=<%=@cluster_gossip_interval%> \
+<% end -%>
+<%- if @cluster_pushpull_interval -%>
+  --cluster.pushpull-interval=<%=@cluster_pushpull_interval%> \
+<%- end -%>
+<%- if @cluster_refresh_interval -%>
+  --cluster.refresh-interval=<%=@cluster_refresh_interval%> \
+<%- end -%>
+<%- if @query_timeout -%>
+  --query.timeout=<%=@query_timeout%> \
+<%- end -%>
+<%- if @query_max_concurrent -%>
+  --query.max-concurrent=<%=@query_max_concurrent%> \
+<%- end -%>
+<%- if @query_replica_label -%>
+  --query.replica-label=<%=@query_replica_label%> \
+<%- end -%>
+<%- if @selector_label -%>
+  <% @selector_label.each do |val| -%>
+  --selector-label=<%= val %> \
+  <% end -%>
+<%- end -%>
+<%- if @store -%>
+  <% @store.each do |val| -%>
+  --store=<%= val %> \
+  <% end -%>
+<%- end -%>
+<%- if @query_auto_downsampling -%>
+  --query.auto-downsampling
+<%- end -%>
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
