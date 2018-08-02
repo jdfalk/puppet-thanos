@@ -36,10 +36,10 @@ class thanos::compactor(
     }
 
 
-  systemd::unit_file { 'thanos-compactor.service':
-  content => template('thanos-compactor.service.erb'),
+  systemd::unit_file { 'thanos-compact.service':
+  content => template('thanos-compact.service.erb'),
 
-  } ~> service {'thanos-compactor':
+  } ~> service {'thanos-compact':
   ensure => 'running',
   enable => true,
 }
