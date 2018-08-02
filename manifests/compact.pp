@@ -1,18 +1,18 @@
-# thanos::compactor
+# thanos::compact
 #
 # A description of what this class does
 #
 # @summary A short summary of the purpose of this class
 #
 # @example
-#   include thanos::compactor
-class thanos::compactor(
+#   include thanos::compact
+class thanos::compact(
   String  $log_level                     = 'info',
   String  $gcloudtrace_project           = '',
   Integer $gcloudtrace_sample_factor     = 0,
   Integer $http_port                     = 13902,
   String  $http_address                  = "0.0.0.0:${http_port}",
-  String  $data_dir                      = '/var/data/thanos-compactor',
+  String  $data_dir                      = '/var/data/thanos-compact',
   String  $gcs_bucket                    = '',
   String  $s3_bucket                     = 'prometheus',
   String  $s3_endpoint                   = '',
