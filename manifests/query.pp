@@ -75,7 +75,7 @@ class thanos::query (
   include thanos::install
 
   systemd::unit_file { 'thanos-query.service':
-  content => template('thanos-query.service.erb'),
+  content => template('thanos/thanos-query.service.erb'),
 
   } ~> service {'thanos-query':
   ensure => 'running',

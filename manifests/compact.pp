@@ -37,7 +37,7 @@ class thanos::compact(
 
 
   systemd::unit_file { 'thanos-compact.service':
-  content => template('thanos-compact.service.erb'),
+  content => template('thanos/thanos-compact.service.erb'),
 
   } ~> service {'thanos-compact':
   ensure => 'running',

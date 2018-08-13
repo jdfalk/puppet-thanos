@@ -107,7 +107,7 @@ class thanos::sidecar (
   include thanos::install
 
   systemd::unit_file { 'thanos.service':
-  content => template('thanos.service.erb'),
+  content => template('thanos/thanos.service.erb'),
 
   } ~> service {'thanos':
   ensure => 'running',

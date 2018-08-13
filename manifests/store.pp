@@ -103,7 +103,7 @@ class thanos::store (
   include thanos::install
 
   systemd::unit_file { 'thanos-store.service':
-  content => template('thanos-store.service.erb'),
+  content => template('thanos/thanos-store.service.erb'),
 
   } ~> service {'thanos-store':
   ensure => 'running',
