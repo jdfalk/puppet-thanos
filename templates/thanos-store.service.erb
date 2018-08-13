@@ -50,6 +50,12 @@ ExecStart=/usr/bin/thanos store \
 <%- if @cluster_refresh_interval -%>
   --cluster.refresh-interval=<%=@cluster_refresh_interval%> \
 <%- end -%>
+<%- if @cluster_secret_key -%>
+  --cluster.secret-key=<%=@cluster_secret_key%> \
+<%- end -%>
+<%- if @cluster_network_type -%>
+  --cluster.network-type=<%=@cluster_network_type%> \
+<%- end -%>
 <%- if @tsdb_path -%>
   --tsdb.path=<%=@tsdb_path%> \
 <%- end -%>
