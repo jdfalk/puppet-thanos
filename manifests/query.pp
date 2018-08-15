@@ -69,6 +69,7 @@ class thanos::query (
     String  $query_replica_label                  = 'prometheus_replica',
     Array   $selector_label                       = [],
     Array   $store                                = [],
+    Boolean $query_auto_downsampling              = true,
 ) {
   include systemd
   include thanos
