@@ -38,7 +38,7 @@ ExecStart=/usr/bin/thanos store \
 <%- end -%>
 <%- if @cluster_peers -%>
   <% @cluster_peers.each do |val| -%>
-  --cluster.peers=<%= val %> \
+--cluster.peers=<%= val %> \
   <% end -%>
 <%- end -%>
 <%- if @cluster_gossip_interval -%>

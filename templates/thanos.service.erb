@@ -4,7 +4,7 @@
 [Unit]
 Description=Prometheus Thanos Subsystem
 Wants=basic.target
-After=basic.target network.target
+After=basic.target network.target thanos.service
 
 [Service]
 Environment='S3_SECRET_KEY=<%=@s3_secret_key%>'
@@ -38,7 +38,7 @@ ExecStart=/usr/bin/thanos sidecar \
 <%- end -%>
 <%- if @cluster_peers -%>
   <% @cluster_peers.each do |val| -%>
-  --cluster.peers=<%= val %> \
+--cluster.peers=<%= val %> \
   <% end -%>
 <%- end -%>
 <%- if @cluster_gossip_interval -%>
