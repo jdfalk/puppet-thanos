@@ -7,22 +7,22 @@
 # @example
 #   include thanos::compact
 class thanos::compact(
-  String  $log_level                     = 'info',
-  Optional[String]  $gcloudtrace_project,
-  Integer $gcloudtrace_sample_factor     = 0,
-  Integer $http_port                     = 13902,
-  String  $http_address                  = "0.0.0.0:${http_port}",
-  String  $data_dir                      = '/var/data/thanos-compact',
-  Optional[String]  $gcs_bucket,
-  String  $s3_bucket                     = 'prometheus',
-  Optional[String]  $s3_endpoint,
-  Optional[String]  $s3_access_key,
-  Optional[String]  $s3_secret_key,
-  Optional[String]  $s3_insecure,
-  Optional[String]  $s3_signature_version2,
-  Optional[String]  $s3_encrypt_sse,
-  String  $sync_delay                    = '30m',
-  Boolean $wait                          = true,
+  String  $log_level                       = 'info',
+  Optional[String]  $gcloudtrace_project   = undef,
+  Integer $gcloudtrace_sample_factor       = 0,
+  Integer $http_port                       = 13902,
+  String  $http_address                    = "0.0.0.0:${http_port}",
+  String  $data_dir                        = '/var/data/thanos-compact',
+  Optional[String]  $gcs_bucket            = undef,
+  String  $s3_bucket                       = 'prometheus',
+  Optional[String]  $s3_endpoint           = undef,
+  Optional[String]  $s3_access_key         = undef,
+  Optional[String]  $s3_secret_key         = undef,
+  Optional[String]  $s3_insecure           = undef,
+  Optional[String]  $s3_signature_version2 = undef,
+  Optional[String]  $s3_encrypt_sse        = undef,
+  String  $sync_delay                      = '30m',
+  Boolean $wait                            = true,
 ) {
   include systemd
   include thanos
