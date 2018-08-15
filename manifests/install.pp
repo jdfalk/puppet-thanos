@@ -7,7 +7,7 @@
 # @example
 #   include thanos::install
 class thanos::install (
-  String $version = 'v1.0',
+  String $version = 'latest',
 ) {
   package { 'thanos':
       ensure  => $version,
