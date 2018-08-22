@@ -94,7 +94,7 @@ class thanos::sidecar (
     Optional[String] $s3_endpoint                    = undef,
     Optional[String] $s3_access_key                  = undef,
     Optional[String] $s3_secret_key                  = undef,
-    Optional[String] $s3_insecure                    = undef,
+    Optional[Boolean] $s3_insecure                   = undef,
     Optional[String] $s3_signature_version2          = undef,
     Optional[String] $s3_encrypt_sse                 = undef,
     Optional[String] $reloader_config_file           = undef,

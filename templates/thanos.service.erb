@@ -66,28 +66,28 @@ ExecStart=/usr/bin/thanos sidecar \
   --gcs.bucket=<%=@gcs_bucket%> \
 <%- end -%>
 <%- if @s3_bucket -%>
-  --s3.bucket=<%=@s3_bucket%>
+  --s3.bucket=<%=@s3_bucket%> \
 <%- end -%>
 <%- if @s3_endpoint -%>
-  --s3.endpoint=<%=@s3_endpoint%>
+  --s3.endpoint=<%=@s3_endpoint%> \
 <%- end -%>
 <%- if @s3_access_key -%>
-  --s3.access-key=<%=@s3_access_key%>
+  --s3.access-key=<%=@s3_access_key%> \
 <%- end -%>
 <%- if @s3_insecure -%>
-  --s3.insecure
+  --s3.insecure \
 <%- end -%>
 <%- if @s3_signature_version2 -%>
-  --s3.signature-version2
+  --s3.signature-version2 \
 <%- end -%>
 <%- if @s3_encrypt_sse -%>
-  --s3.encrypt-sse
+  --s3.encrypt-sse \
 <%- end -%>
 <%- if @reloader_config_file -%>
-  --reloader.config-file==<%=@reloader_config_file%>
+  --reloader.config-file==<%=@reloader_config_file%> \
 <%- end -%>
 <%- if @reloader_config_envsubst_file -%>
-  --reloader.config-envsubst-file=<%=@reloader_config_envsubst_file%>
+  --reloader.config-envsubst-file=<%=@reloader_config_envsubst_file%> \
 <%- end -%>
 <%- if @reloader_rule_dir -%>
   --reloader.rule-dir=<%=@reloader_rule_dir%>

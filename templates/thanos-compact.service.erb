@@ -7,8 +7,6 @@ Wants=basic.target
 After=basic.target network.target
 
 [Service]
-User=<%=@user%>
-Group=prometheus
 Environment='S3_SECRET_KEY=<%=@s3_secret_key%>'
 ExecStart=/usr/bin/thanos compact \
 <%- if @log_level -%>
@@ -30,22 +28,22 @@ ExecStart=/usr/bin/thanos compact \
   --gcs.bucket=<%=@gcs_bucket%> \
 <%- end -%>
 <%- if @s3_bucket -%>
-  --s3.bucket=<%=@s3_bucket%>
+  --s3.bucket=<%=@s3_bucket%> \
 <%- end -%>
 <%- if @s3_endpoint -%>
-  --s3.endpoint=<%=@s3_endpoint%>
+  --s3.endpoint=<%=@s3_endpoint%> \
 <%- end -%>
 <%- if @s3_access_key -%>
-  --s3.access-key=<%=@s3_access_key%>
+  --s3.access-key=<%=@s3_access_key%> \
 <%- end -%>
 <%- if @s3_insecure -%>
-  --s3.insecure
+  --s3.insecure \
 <%- end -%>
 <%- if @s3_signature_version2 -%>
-  --s3.signature-version2
+  --s3.signature-version2 \
 <%- end -%>
 <%- if @s3_encrypt_sse -%>
-  --s3.encrypt-sse
+  --s3.encrypt-sse \
 <%- end -%>
 <%- if @sync_delay -%>
   --sync-delay=<%=@sync_delay%> \
