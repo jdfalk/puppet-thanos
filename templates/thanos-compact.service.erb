@@ -22,7 +22,7 @@ ExecStart=/usr/bin/thanos compact \
   --http-address=<%=@http_address%> \
 <%- end -%>
 <%- if @data_dir -%>
-  --data-dir=<%=@data_dir%>
+  --data-dir=<%=@data_dir%> \
 <%- end -%>
 <%- if @gcs_bucket -%>
   --gcs.bucket=<%=@gcs_bucket%> \
