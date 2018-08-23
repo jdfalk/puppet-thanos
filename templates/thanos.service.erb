@@ -82,7 +82,7 @@ ExecStart=/usr/bin/thanos sidecar \
   --s3.encrypt-sse \
 <%- end -%>
 <%- if @reloader_config_file -%>
-  --reloader.config-file==<%=@reloader_config_file%> \
+  --reloader.config-file=<%=@reloader_config_file%> \
 <%- end -%>
 <%- if @reloader_config_envsubst_file -%>
   --reloader.config-envsubst-file=<%=@reloader_config_envsubst_file%> \
