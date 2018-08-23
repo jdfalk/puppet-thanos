@@ -52,7 +52,7 @@ ExecStart=/usr/bin/thanos sidecar \
   --cluster.secret-key=<%=@cluster_secret_key%> \
 <%- end -%>
 <%- if @cluster_network_type -%>
-  --cluster.network-type=<%=@cluster_network_type%> \
+--cluster.network-type=<%=@cluster_network_type%> \
 <%- end -%>
 <%- if @prometheus_url -%>
   --prometheus.url=<%=@prometheus_url%> \
