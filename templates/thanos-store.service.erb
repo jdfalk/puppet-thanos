@@ -9,9 +9,6 @@ After=basic.target network.target
 [Service]
 Environment='S3_SECRET_KEY=<%=@s3_secret_key%>'
 ExecStart=/usr/bin/thanos store \
-<%- if @log_level -%>
-  --log.level=<%=@log_level%> \
-<% end -%>
 <%- if @gcloudtrace_project -%>
   --gcloudtrace.project=<%=@gcloudtrace_project%> \
 <%- end -%>
@@ -84,9 +81,11 @@ ExecStart=/usr/bin/thanos store \
   --index-cache-size==<%=@index_cache_size%> \
 <%- end -%>
 <%- if @chunk_pool_size -%>
-  --chunk-pool-size=<%=@chunk_pool_size%>
+  --chunk-pool-size=<%=@chunk_pool_size%> \
 <%- end -%>
-
+<%- if @log_level -%>
+  --log.level=<%=@log_level%>
+<% end -%>
 Restart=always
 
 [Install]

@@ -9,9 +9,6 @@ After=basic.target network.target
 [Service]
 Environment='S3_SECRET_KEY=<%=@s3_secret_key%>'
 ExecStart=/usr/bin/thanos compact \
-<%- if @log_level -%>
-  --log.level=<%=@log_level%> \
-<% end -%>
 <%- if @gcloudtrace_project -%>
   --gcloudtrace.project=<%=@gcloudtrace_project%> \
 <%- end -%>
@@ -49,8 +46,11 @@ ExecStart=/usr/bin/thanos compact \
   --sync-delay=<%=@sync_delay%> \
 <%- end -%>
 <%- if @wait -%>
-  --wait
+  --wait \
 <%- end -%>
+<%- if @log_level -%>
+  --log.level=<%=@log_level%>
+<% end -%>
 Restart=always
 
 [Install]
