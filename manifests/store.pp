@@ -97,7 +97,7 @@ class thanos::store (
     Optional[Boolean] $s3_insecure                = undef,
     Optional[String]  $s3_signature_version2      = undef,
     Optional[String]  $s3_encrypt_sse             = undef,
-    Optioanl[String]  $index_cache_size           = undef,
+    Optional[String]  $index_cache_size           = undef,
     Optional[String]  $chunk_pool_size            = undef,
 ) {
   include systemd
