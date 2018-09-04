@@ -78,7 +78,7 @@ ExecStart=/usr/bin/thanos store \
   --s3.encrypt-sse \
 <%- end -%>
 <%- if @index_cache_size -%>
-  --index-cache-size==<%=@index_cache_size%> \
+  --index-cache-size=<%=@index_cache_size%> \
 <%- end -%>
 <%- if @chunk_pool_size -%>
   --chunk-pool-size=<%=@chunk_pool_size%> \
