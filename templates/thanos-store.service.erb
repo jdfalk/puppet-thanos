@@ -85,6 +85,8 @@ ExecStart=/usr/bin/thanos store \
 <%- end -%>
 <%- if @log_level -%>
   --log.level=<%=@log_level%>
+<%- else -%>
+  --log.level=info
 <% end -%>
 Restart=always
 

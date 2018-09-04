@@ -63,8 +63,10 @@
 #   Whether to use Server Side Encryption
 # @param $index_cache_size [String] optional 
 #   Maximum size of items held in the index cache.
+#   Default: 250MB
 # @param $chunk_pool_size [String] optional
 #   Maximum size of concurrently allocatable bytes for chunks.
+#   Default: 2GB
 #
 # @example
 #   include thanos::store
@@ -95,8 +97,8 @@ class thanos::store (
     Optional[Boolean] $s3_insecure                = undef,
     Optional[String]  $s3_signature_version2      = undef,
     Optional[String]  $s3_encrypt_sse             = undef,
-    String  $index_cache_size                     = '250MB',
-    String  $chunk_pool_size                      = '2GB',
+    Optioanl[String]  $index_cache_size           = undef,
+    Optional[String]  $chunk_pool_size            = undef,
 ) {
   include systemd
   include thanos

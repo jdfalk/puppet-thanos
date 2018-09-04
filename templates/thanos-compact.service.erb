@@ -50,6 +50,8 @@ ExecStart=/usr/bin/thanos compact \
 <%- end -%>
 <%- if @log_level -%>
   --log.level=<%=@log_level%>
+<%- else -%>
+  --log.level=info
 <% end -%>
 Restart=always
 
