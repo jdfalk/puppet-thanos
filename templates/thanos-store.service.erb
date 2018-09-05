@@ -53,8 +53,8 @@ ExecStart=/usr/bin/thanos store \
 <%- if @cluster_network_type -%>
 --cluster.network-type=<%=@cluster_network_type%> \
 <%- end -%>
-<%- if @tsdb_path -%>
-  --tsdb.path=<%=@tsdb_path%> \
+<%- if @data_dir -%>
+  --data-dir=<%=@data_dir%> \
 <%- end -%>
 <%- if @gcs_bucket -%>
   --gcs.bucket=<%=@gcs_bucket%> \

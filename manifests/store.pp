@@ -44,8 +44,8 @@
 #   Interval for gossip state syncs. Setting this interval lower (more frequent)
 #   will increase convergence speeds across larger clusters at the expense of 
 #   increased bandwidth usage.
-# @param $tsdb_path [String] optional
-#   Data directory of TSDB.
+# @param $data_dir [String] optional
+#   Data directory.
 # @param $gcs_bucket [String] optional
 #   Google Cloud Storage bucket name for stored blocks. 
 #   If empty sidecar won't store any block inside Google Cloud Storage.
@@ -88,7 +88,7 @@ class thanos::store (
     Optional[String]  $cluster_refresh_interval   = undef,
     Optional[String]  $cluster_secret_key         = undef,
     String  $cluster_network_type                 = 'wan',
-    String  $tsdb_path                            = '/var/data/prometheus',
+    String  $data_dir                            = '/var/lib/thanos/store',
     Optional[String]  $gcs_bucket                 = undef,
     String  $s3_bucket                            = 'prometheus',
     Optional[String]  $s3_endpoint                = undef,
