@@ -65,7 +65,7 @@
 #   Config file watched by the reloader.
 # @param $reloader_config_envsubst_file [String] optional
 #   Output file for environment variable substituted config file.
-# @param $reloader_rule_dir [String] optional
+# @param $reloader_rule_dir array[string] optional
 #   Rule directory for the reloader to refresh.
 # @example
 #   include thanos::sidecar
@@ -99,7 +99,7 @@ class thanos::sidecar (
     Optional[String] $s3_encrypt_sse                 = undef,
     Optional[String] $reloader_config_file           = undef,
     Optional[String] $reloader_config_envsubst_file  = undef,
-    Optional[String] $reloader_rule_dir              = undef,
+    Optional[Array[String]] $reloader_rule_dir       = undef,
 
 ) {
   include systemd

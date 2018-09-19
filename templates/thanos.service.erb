@@ -88,7 +88,9 @@ ExecStart=/usr/bin/thanos sidecar \
   --reloader.config-envsubst-file=<%=@reloader_config_envsubst_file%> \
 <%- end -%>
 <%- if @reloader_rule_dir -%>
-  --reloader.rule-dir=<%=@reloader_rule_dir%> \
+  <% @reloader_rule_dir.each do |val| -%>
+--reloader.rule-dir=<%=@reloader_rule_dir%> \
+  <% end -%>
 <%- end -%>
 <%- if @log_level -%>
   --log.level=<%=@log_level%>
