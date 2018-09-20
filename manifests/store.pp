@@ -94,9 +94,9 @@ class thanos::store (
     Optional[String]  $s3_endpoint                = undef,
     Optional[String]  $s3_access_key              = undef,
     Optional[String]  $s3_secret_key              = undef,
-    Optional[Boolean] $s3_insecure                = undef,
-    Optional[String]  $s3_signature_version2      = undef,
-    Optional[String]  $s3_encrypt_sse             = undef,
+    Optional[String]  $s3_insecure                = 'false',
+    Optional[String]  $s3_signature_version2      = 'false',
+    Optional[String]  $s3_encrypt_sse             = 'false',
     Optional[String]  $index_cache_size           = undef,
     Optional[String]  $chunk_pool_size            = undef,
     Optional[String]  $store_objstore_config_file = '/etc/thanos/store_bucket.yaml',
@@ -105,12 +105,14 @@ class thanos::store (
   include thanos
   include thanos::install
 
-  file { $store_objstore_config_file:
-    ensure  => present,
-    group   => $thanos::group,
-    mode    => '0755',
-    owner   => $thanos::user,
-    content => template('thanos/bucket.yaml.erb'),
+  if $store_objstore_config_file {
+    file { $store_objstore_config_file:
+      ensure  => present,
+      group   => $thanos::group,
+      mode    => '0750',
+      owner   => $thanos::user,
+      content => template('thanos/bucket.yaml.erb'),
+    }
   }
 
   systemd::unit_file { 'thanos-store.service':

@@ -18,9 +18,9 @@ class thanos::compact(
   Optional[String]  $s3_endpoint                   = undef,
   Optional[String]  $s3_access_key                 = undef,
   Optional[String]  $s3_secret_key                 = undef,
-  Optional[Boolean] $s3_insecure                   = undef,
-  Optional[String]  $s3_signature_version2         = undef,
-  Optional[String]  $s3_encrypt_sse                = undef,
+  Optional[String]  $s3_insecure                   = 'false',
+  Optional[String]  $s3_signature_version2         = 'false',
+  Optional[String]  $s3_encrypt_sse                = 'false',
   String  $sync_delay                              = '30m',
   Boolean $wait                                    = true,
   Optional[String]  $compact_objstore_config_file  = '/etc/thanos/compact_bucket.yaml',
@@ -40,7 +40,7 @@ class thanos::compact(
     file { $compact_objstore_config_file:
       ensure  => present,
       group   => $thanos::group,
-      mode    => '0755',
+      mode    => '0750',
       owner   => $thanos::user,
       content => template('thanos/bucket.yaml.erb'),
     }

@@ -94,9 +94,9 @@ class thanos::sidecar (
     Optional[String] $s3_endpoint                    = undef,
     Optional[String] $s3_access_key                  = undef,
     Optional[String] $s3_secret_key                  = undef,
-    Optional[Boolean] $s3_insecure                   = false,
-    Optional[Boolean] $s3_signature_version2         = false,
-    Optional[Boolean] $s3_encrypt_sse                = false,
+    Optional[String] $s3_insecure                    = 'false',
+    Optional[String] $s3_signature_version2          = 'false',
+    Optional[String] $s3_encrypt_sse                 = 'false',
     Optional[String] $reloader_config_file           = undef,
     Optional[String] $reloader_config_envsubst_file  = undef,
     Optional[Array[String]] $reloader_rule_dir       = undef,
@@ -107,14 +107,15 @@ class thanos::sidecar (
   include thanos
   include thanos::install
 
-  file { $sidecar_objstore_config_file:
-    ensure  => present,
-    group   => $thanos::group,
-    mode    => '0755',
-    owner   => $thanos::user,
-    content => template('thanos/bucket.yaml.erb'),
+  if $sidecar_objstore_config_file {
+    file { $sidecar_objstore_config_file:
+      ensure  => present,
+      group   => $thanos::group,
+      mode    => '0750',
+      owner   => $thanos::user,
+      content => template('thanos/bucket.yaml.erb'),
+    }
   }
-
 
   systemd::unit_file { 'thanos.service':
   content => template('thanos/thanos.service.erb'),
