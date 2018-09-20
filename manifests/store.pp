@@ -99,10 +99,19 @@ class thanos::store (
     Optional[String]  $s3_encrypt_sse             = undef,
     Optional[String]  $index_cache_size           = undef,
     Optional[String]  $chunk_pool_size            = undef,
+    Optional[String]  $store_objstore_config_file = '/etc/thanos/store_bucket.yaml',
 ) {
   include systemd
   include thanos
   include thanos::install
+
+  file { $store_objstore_config_file:
+    ensure  => present,
+    group   => $thanos::group,
+    mode    => '0755',
+    owner   => $thanos::user,
+    content => template('thanos/bucket.yaml.erb'),
+  }
 
   systemd::unit_file { 'thanos-store.service':
   content => template('thanos/thanos-store.service.erb'),

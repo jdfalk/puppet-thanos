@@ -52,6 +52,7 @@ class thanos (
     String  $user                          = 'thanos',
     String  $group                         = 'thanos',
     String  $extra_groups                  = 'prometheus',
+    String  $config_dir                    = '/etc/thanos',
 ) {
 
   if $thanos::manage_user {
@@ -70,6 +71,12 @@ class thanos (
       ensure => 'present',
       system => true,
     })
+  }
+  file { $config_dir:
+    ensure => 'directory',
+    group  => $group,
+    mode   => '0755',
+    owner  => $user,
   }
 
 

@@ -60,26 +60,8 @@ ExecStart=/usr/bin/thanos sidecar \
 <%- if @tsdb_path -%>
   --tsdb.path=<%=@tsdb_path%> \
 <%- end -%>
-<%- if @gcs_bucket -%>
-  --gcs.bucket=<%=@gcs_bucket%> \
-<%- end -%>
-<%- if @s3_bucket -%>
-  --s3.bucket=<%=@s3_bucket%> \
-<%- end -%>
-<%- if @s3_endpoint -%>
-  --s3.endpoint=<%=@s3_endpoint%> \
-<%- end -%>
-<%- if @s3_access_key -%>
-  --s3.access-key=<%=@s3_access_key%> \
-<%- end -%>
-<%- if @s3_insecure -%>
-  --s3.insecure \
-<%- end -%>
-<%- if @s3_signature_version2 -%>
-  --s3.signature-version2 \
-<%- end -%>
-<%- if @s3_encrypt_sse -%>
-  --s3.encrypt-sse \
+<%- if @sidecar_objstore_config_file -%>
+  --objstore.config-file=<%=@sidecar_objstore_config_file%> \
 <%- end -%>
 <%- if @reloader_config_file -%>
   --reloader.config-file=<%=@reloader_config_file%> \

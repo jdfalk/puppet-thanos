@@ -7,22 +7,23 @@
 # @example
 #   include thanos::compact
 class thanos::compact(
-  String  $log_level                       = 'info',
-  Optional[String]  $gcloudtrace_project   = undef,
-  Integer $gcloudtrace_sample_factor       = 0,
-  Integer $http_port                       = 13902,
-  String  $http_address                    = "0.0.0.0:${http_port}",
-  String  $data_dir                        = '/var/data/thanos-compact',
-  Optional[String]  $gcs_bucket            = undef,
-  String  $s3_bucket                       = 'prometheus',
-  Optional[String]  $s3_endpoint           = undef,
-  Optional[String]  $s3_access_key         = undef,
-  Optional[String]  $s3_secret_key         = undef,
-  Optional[Boolean] $s3_insecure           = undef,
-  Optional[String]  $s3_signature_version2 = undef,
-  Optional[String]  $s3_encrypt_sse        = undef,
-  String  $sync_delay                      = '30m',
-  Boolean $wait                            = true,
+  String  $log_level                               = 'info',
+  Optional[String]  $gcloudtrace_project           = undef,
+  Integer $gcloudtrace_sample_factor               = 0,
+  Integer $http_port                               = 13902,
+  String  $http_address                            = "0.0.0.0:${http_port}",
+  String  $data_dir                                = '/var/data/thanos-compact',
+  Optional[String]  $gcs_bucket                    = undef,
+  String  $s3_bucket                               = 'prometheus',
+  Optional[String]  $s3_endpoint                   = undef,
+  Optional[String]  $s3_access_key                 = undef,
+  Optional[String]  $s3_secret_key                 = undef,
+  Optional[Boolean] $s3_insecure                   = undef,
+  Optional[String]  $s3_signature_version2         = undef,
+  Optional[String]  $s3_encrypt_sse                = undef,
+  String  $sync_delay                              = '30m',
+  Boolean $wait                                    = true,
+  Optional[String]  $compact_objstore_config_file  = '/etc/thanos/compact_bucket.yaml',
 ) {
   include systemd
   include thanos
@@ -35,6 +36,15 @@ class thanos::compact(
       mode   => '0664',
     }
 
+  if $compact_objstore_config_file {
+    file { $compact_objstore_config_file:
+      ensure  => present,
+      group   => $thanos::group,
+      mode    => '0755',
+      owner   => $thanos::user,
+      content => template('thanos/bucket.yaml.erb'),
+    }
+  }
 
   systemd::unit_file { 'thanos-compact.service':
   content => template('thanos/thanos-compact.service.erb'),
