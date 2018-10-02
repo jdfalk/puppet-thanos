@@ -18,12 +18,13 @@ class thanos::compact(
   Optional[String]  $s3_endpoint                   = undef,
   Optional[String]  $s3_access_key                 = undef,
   Optional[String]  $s3_secret_key                 = undef,
-  Optional[String]  $s3_insecure                   = 'false',
-  Optional[String]  $s3_signature_version2         = 'false',
-  Optional[String]  $s3_encrypt_sse                = 'false',
+  Optional[String]  $s3_insecure                   = false,
+  Optional[String]  $s3_signature_version2         = false,
+  Optional[String]  $s3_encrypt_sse                = false,
   String  $sync_delay                              = '30m',
   Boolean $wait                                    = true,
   Optional[String]  $compact_objstore_config_file  = '/etc/thanos/compact_bucket.yaml',
+  Optioanl[Boolean] $disable_downsample            = false,
 ) {
   include systemd
   include thanos

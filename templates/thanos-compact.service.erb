@@ -29,6 +29,9 @@ ExecStart=/usr/bin/thanos compact \
 <%- if @compact_objstore_config_file -%>
   --objstore.config-file=<%=@compact_objstore_config_file%> \
 <%- end -%>
+<%- if @disable_downsample -%>
+  --debug.disable-downsampling \
+<%- end -%>
 <%- if @log_level -%>
   --log.level=<%=@log_level%>
 <%- else -%>

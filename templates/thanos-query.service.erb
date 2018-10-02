@@ -72,7 +72,7 @@ ExecStart=/usr/bin/thanos query \
   <% end -%>
 <%- end -%>
 <%- if @query_auto_downsampling -%>
-  --query.auto-downsampling \
+--query.auto-downsampling \
 <%- end -%>
 <%- if @log_level -%>
   --log.level=<%=@log_level%>
