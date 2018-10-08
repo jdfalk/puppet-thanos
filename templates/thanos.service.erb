@@ -71,7 +71,7 @@ ExecStart=/usr/bin/thanos sidecar \
 <%- end -%>
 <%- if @reloader_rule_dir -%>
   <% @reloader_rule_dir.each do |val| -%>
---reloader.rule-dir=<%=@reloader_rule_dir%> \
+--reloader.rule-dir=<%= val %> \
   <% end -%>
 <%- end -%>
 <%- if @log_level -%>
