@@ -99,7 +99,7 @@ class thanos::sidecar (
     Optional[Boolean] $s3_encrypt_sse                = false,
     Optional[String] $reloader_config_file           = undef,
     Optional[String] $reloader_config_envsubst_file  = undef,
-    Optional[Array[String]] $reloader_rule_dir       = undef,
+    Optional[Array] $reloader_rule_dir               = undef,
     Optional[String]  $sidecar_objstore_config_file  = '/etc/thanos/sidecar_bucket.yaml',
 
 ) {
