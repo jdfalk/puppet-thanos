@@ -2,14 +2,14 @@ type: S3
 config:
     bucket: <%=@s3_bucket%>
     endpoint: <%=@s3_endpoint%>
-    access-key: <%=@s3_access_key%>
+    access_key: <%=@s3_access_key%>
     <%- if @s3_insecure -%>
     insecure: true
     <%- end -%>
     <%- if @s3_signature_version2 -%>
-    signature-version2: true
+    signature_version2: true
     <%- end -%>
     <%- if @s3_encrypt_sse -%>
-    encrypt-sse: true
+    encrypt_sse: true
     <%- end -%>
-    secret-key: <%=@s3_secret_key%>
+    secret_key: <%=@s3_secret_key%>
