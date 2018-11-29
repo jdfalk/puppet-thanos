@@ -101,6 +101,8 @@ class thanos::sidecar (
     Optional[String] $reloader_config_envsubst_file  = undef,
     Optional[Array] $reloader_rule_dir               = undef,
     Optional[String]  $sidecar_objstore_config_file  = '/etc/thanos/sidecar_bucket.yaml',
+    Boolean $sidecar_sd_file                         = false,
+    Optional[String] $sidecar_sd_peers_config_file   = '/etc/thanos/sidecar_sd_peers.yaml',
 
 ) {
   include systemd
@@ -125,6 +127,12 @@ class thanos::sidecar (
   enable => true,
 }
 
-
+  file { $sidecar_sd_peers_config_file:
+      ensure  => present,
+      group   => $thanos::group,
+      mode    => '0750',
+      owner   => $thanos::user,
+      content => template('thanos/peers.yaml.erb'),
+  }
 
 }

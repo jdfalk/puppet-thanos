@@ -52,6 +52,9 @@ ExecStart=/usr/bin/thanos query \
 <%- if @cluster_network_type -%>
 --cluster.network-type=<%=@cluster_network_type%> \
 <%- end -%>
+<%- if @query_sd_file -%>
+  --query.sd-files=<%=@query_sd_peers_config_file%> \
+<%- end -%>
 <%- if @query_timeout -%>
   --query.timeout=<%=@query_timeout%> \
 <%- end -%>

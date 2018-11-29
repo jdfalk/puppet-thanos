@@ -52,6 +52,9 @@ ExecStart=/usr/bin/thanos store \
 <%- if @cluster_network_type -%>
 --cluster.network-type=<%=@cluster_network_type%> \
 <%- end -%>
+<%- if @store_sd_file -%>
+  --store.sd-files=<%=@store_sd_peers_config_file%> \
+<%- end -%>
 <%- if @data_dir -%>
   --data-dir=<%=@data_dir%> \
 <%- end -%>

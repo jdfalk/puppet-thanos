@@ -47,29 +47,31 @@
 # @example
 #   include thanos::query
 class thanos::query (
-    String  $log_level                            = 'info',
-    Optional[String] $gcloudtrace_project         = undef,
-    Integer $gcloudtrace_sample_factor            = 0,
-    Integer $grpc_port                            = 11901,
-    String  $grpc_address                         = "0.0.0.0:${grpc_port}",
-    Optional[String]  $grpc_advertise_address     = undef,
-    Integer $http_port                            = 11902,
-    String  $http_address                         = "0.0.0.0:${http_port}",
-    Integer $cluster_port                         = 11900,
-    String  $cluster_address                      = "0.0.0.0:${cluster_port}",
-    Optional[String]  $cluster_advertise_address  = undef,
-    Array   $cluster_peers                        = [],
-    Optional[String]  $cluster_gossip_interval    = undef,
-    Optional[String]  $cluster_pushpull_interval  = undef,
-    Optional[String]  $cluster_refresh_interval   = undef,
-    Optional[String]  $cluster_secret_key         = undef,
-    String  $cluster_network_type                 = 'wan',
-    Optional[String]  $query_timeout              = undef,
-    Integer $query_max_concurrent                 = 20,
-    String  $query_replica_label                  = 'prometheus_replica',
-    Array   $selector_label                       = [],
-    Array   $store                                = [],
-    Boolean $query_auto_downsampling              = true,
+    String  $log_level                             = 'info',
+    Optional[String] $gcloudtrace_project          = undef,
+    Integer $gcloudtrace_sample_factor             = 0,
+    Integer $grpc_port                             = 11901,
+    String  $grpc_address                          = "0.0.0.0:${grpc_port}",
+    Optional[String]  $grpc_advertise_address      = undef,
+    Integer $http_port                             = 11902,
+    String  $http_address                          = "0.0.0.0:${http_port}",
+    Integer $cluster_port                          = 11900,
+    String  $cluster_address                       = "0.0.0.0:${cluster_port}",
+    Optional[String]  $cluster_advertise_address   = undef,
+    Array   $cluster_peers                         = [],
+    Optional[String]  $cluster_gossip_interval     = undef,
+    Optional[String]  $cluster_pushpull_interval   = undef,
+    Optional[String]  $cluster_refresh_interval    = undef,
+    Optional[String]  $cluster_secret_key          = undef,
+    String  $cluster_network_type                  = 'wan',
+    Optional[String]  $query_timeout               = undef,
+    Integer $query_max_concurrent                  = 20,
+    String  $query_replica_label                   = 'prometheus_replica',
+    Array   $selector_label                        = [],
+    Array   $store                                 = [],
+    Boolean $query_auto_downsampling               = true,
+    Boolean $query_sd_file                         = false,
+    Optional[String] $query_sd_peers_config_file   = '/etc/thanos/query_sd_peers.yaml',
 ) {
   include systemd
   include thanos
@@ -83,6 +85,13 @@ class thanos::query (
   enable => true,
 }
 
+  file { $query_sd_peers_config_file:
+      ensure  => present,
+      group   => $thanos::group,
+      mode    => '0750',
+      owner   => $thanos::user,
+      content => template('thanos/peers.yaml.erb'),
+  }
 
 
 

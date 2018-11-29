@@ -12,7 +12,7 @@
     },
     {
       "name": "camptocamp/puppet-systemd",
-      "version_requirement": ">= 1.0.0"
+      "version_requirement": ">= 1.0.0 < 5.0.0"
     }
   ],
   "operatingsystem_support": [
@@ -41,7 +41,7 @@
       "version_requirement": ">= 4.7.0 < 6.0.0"
     }
   ],
-  "pdk-version": "1.6.1",
+  "pdk-version": "1.7.1",
   "template-url": "https://github.com/puppetlabs/pdk-templates.git",
-  "template-ref": "1.6.1-0-g6b0d497"
+  "template-ref": "1.8.0-0-g0d9da00"
 }
