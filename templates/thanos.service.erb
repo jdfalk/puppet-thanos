@@ -2,7 +2,7 @@
 # Template Path: <%= @module_name %>/templates/thanos.service
 ### Managed by Puppet ###
 [Unit]
-Description=Prometheus Thanos Subsystem
+Description=Thanos Sidecar
 Wants=basic.target
 After=basic.target network.target
 
@@ -28,6 +28,7 @@ ExecStart=/usr/bin/thanos sidecar \
 <%- if @http_advertise_address -%>
   --http-advertise-address=<%=@http_advertise_address%> \
 <%- end -%>
+<%- if @cluster_enable %>
 <%- if @cluster_address -%>
   --cluster.address=<%=@cluster_address%> \
 <%- end -%>
@@ -53,6 +54,9 @@ ExecStart=/usr/bin/thanos sidecar \
 <%- end -%>
 <%- if @cluster_network_type -%>
 --cluster.network-type=<%=@cluster_network_type%> \
+<%- end -%>
+<%- else -%>
+  --cluster.disable \
 <%- end -%>
 <%- if @prometheus_url -%>
   --prometheus.url=<%=@prometheus_url%> \

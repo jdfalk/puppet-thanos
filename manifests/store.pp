@@ -100,8 +100,7 @@ class thanos::store (
     Optional[String]  $index_cache_size           = undef,
     Optional[String]  $chunk_pool_size            = undef,
     Optional[String]  $store_objstore_config_file = '/etc/thanos/store_bucket.yaml',
-    Boolean $store_sd_file                        = false,
-    Optional[String] $store_sd_peers_config_file  = '/etc/thanos/store_sd_peers.yaml',
+    Boolean $cluster_enable                       = false,
 ) {
   include systemd
   include thanos
@@ -123,14 +122,6 @@ class thanos::store (
   } ~> service {'thanos-store':
   ensure => 'running',
   enable => true,
-}
-
-  file { $store_sd_peers_config_file:
-      ensure  => present,
-      group   => $thanos::group,
-      mode    => '0750',
-      owner   => $thanos::user,
-      content => template('thanos/peers.yaml.erb'),
   }
 
 }
