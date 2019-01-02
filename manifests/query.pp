@@ -64,13 +64,14 @@ class thanos::query (
     Optional[String]  $cluster_refresh_interval    = undef,
     Optional[String]  $cluster_secret_key          = undef,
     String  $cluster_network_type                  = 'wan',
+    Optional[Boolean] $cluster_enable              = false,
     Optional[String]  $query_timeout               = undef,
     Integer $query_max_concurrent                  = 20,
     String  $query_replica_label                   = 'prometheus_replica',
     Array   $selector_label                        = [],
     Array   $store                                 = [],
     Boolean $query_auto_downsampling               = true,
-    Boolean $query_sd_file                         = false,
+    Boolean $query_sd_file                         = true,
     Optional[String] $query_sd_peers_config_file   = '/etc/thanos/query_sd_peers.yaml',
 ) {
   include systemd
