@@ -54,7 +54,7 @@ ExecStart=/usr/bin/thanos query \
 --cluster.network-type=<%=@cluster_network_type%> \
   <%- end -%>
 <%- else -%>
---cluster.disable
+  --cluster.disable \
 <%- end -%>
 <%- if @query_sd_file -%>
   --store.sd-files=<%=@query_sd_peers_config_file%> \
