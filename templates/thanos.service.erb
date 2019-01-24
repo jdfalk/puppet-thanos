@@ -9,6 +9,8 @@ After=basic.target network.target
 [Service]
 Environment='S3_SECRET_KEY=<%=@s3_secret_key%>'
 Environment="HOSTNAME=%H"
+LimitNOFILE=infinity
+LimitNPROC=infinity
 ExecStart=/usr/bin/thanos sidecar \
 <%- if @gcloudtrace_project -%>
   --gcloudtrace.project=<%=@gcloudtrace_project%> \

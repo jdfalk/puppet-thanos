@@ -7,6 +7,8 @@ Wants=basic.target
 After=basic.target network.target
 
 [Service]
+LimitNOFILE=infinity
+LimitNPROC=infinity
 ExecStart=/usr/bin/thanos query \
 <%- if @gcloudtrace_project -%>
   --gcloudtrace.project=<%=@gcloudtrace_project%> \
