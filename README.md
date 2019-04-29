@@ -1,6 +1,6 @@
 
 # thanos
-[![TravisCI](https://travis-ci.org/jdfalk/puppet-thanos.svg?branch=master)](https://travis-ci.org/jdfalk/puppet-thanos)
+[![Build Status](https://travis-ci.org/jdfalk/puppet-thanos.svg?branch=master)](https://travis-ci.org/jdfalk/puppet-thanos)
 
 Welcome to your new module. A short overview of the generated parts can be found in the PDK documentation at https://puppet.com/pdk/latest/pdk_generating_modules.html .
 
