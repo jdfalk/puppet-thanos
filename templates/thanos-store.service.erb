@@ -70,6 +70,12 @@ ExecStart=/usr/bin/thanos store \
 <%- if @chunk_pool_size -%>
   --chunk-pool-size=<%=@chunk_pool_size%> \
 <%- end -%>
+<%- if @store_grpc_series_max_concurrency -%>
+  --store.grpc.series-max-concurrency=<%=@store_grpc_series_max_concurrency -%> \
+<%- end -%>
+<%- if @store_grpc_series_sample_limit -%>
+  --store.grpc.series-sample-limit=<%=@store_grpc_series_sample_limit -%> \
+<%- end -%>
 <%- if @log_level -%>
   --log.level=<%=@log_level%>
 <%- else -%>

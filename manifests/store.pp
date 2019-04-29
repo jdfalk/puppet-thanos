@@ -101,6 +101,8 @@ class thanos::store (
     Optional[String]  $chunk_pool_size            = undef,
     Optional[String]  $store_objstore_config_file = '/etc/thanos/store_bucket.yaml',
     Boolean $cluster_enable                       = false,
+    Optional[String] $store_grpc_series_max_concurrency = '20',
+    Optional[String] $store_grpc_series_sample_limit = undef,
 ) {
   include systemd
   include thanos
