@@ -30,36 +30,6 @@ ExecStart=/usr/bin/thanos sidecar \
 <%- if @http_advertise_address -%>
   --http-advertise-address=<%=@http_advertise_address%> \
 <%- end -%>
-<%- if @cluster_enable %>
-<%- if @cluster_address -%>
-  --cluster.address=<%=@cluster_address%> \
-<%- end -%>
-<%- if @cluster_advertise_address -%>
-  --cluster.advertise-address=<%=@cluster_advertise_address%> \
-<%- end -%>
-<%- if @cluster_peers -%>
-  <% @cluster_peers.each do |val| -%>
---cluster.peers=<%= val %> \
-  <% end -%>
-<%- end -%>
-<%- if @cluster_gossip_interval -%>
-  --cluster.gossip-interval=<%=@cluster_gossip_interval%> \
-<% end -%>
-<%- if @cluster_pushpull_interval -%>
-  --cluster.pushpull-interval=<%=@cluster_pushpull_interval%> \
-<%- end -%>
-<%- if @cluster_refresh_interval -%>
-  --cluster.refresh-interval=<%=@cluster_refresh_interval%> \
-<%- end -%>
-<%- if @cluster_secret_key -%>
-  --cluster.secret-key=<%=@cluster_secret_key%> \
-<%- end -%>
-<%- if @cluster_network_type -%>
---cluster.network-type=<%=@cluster_network_type%> \
-<%- end -%>
-<%- else -%>
-  --cluster.disable \
-<%- end -%>
 <%- if @prometheus_url -%>
   --prometheus.url=<%=@prometheus_url%> \
 <%- end -%>
