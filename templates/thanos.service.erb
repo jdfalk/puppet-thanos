@@ -12,12 +12,6 @@ Environment="HOSTNAME=%H"
 LimitNOFILE=infinity
 LimitNPROC=infinity
 ExecStart=/usr/bin/thanos sidecar \
-<%- if @gcloudtrace_project -%>
-  --gcloudtrace.project=<%=@gcloudtrace_project%> \
-<%- end -%>
-<%- if @gcloudtrace_sample_factor -%>
-  --gcloudtrace.sample-factor=<%=@gcloudtrace_sample_factor%> \
-<%- end -%>
 <%- if @grpc_address -%>
   --grpc-address=<%=@grpc_address%> \
 <%- end -%>

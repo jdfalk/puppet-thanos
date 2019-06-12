@@ -8,12 +8,6 @@ After=basic.target network.target
 
 [Service]
 ExecStart=/usr/bin/thanos compact \
-<%- if @gcloudtrace_project -%>
-  --gcloudtrace.project=<%=@gcloudtrace_project%> \
-<%- end -%>
-<%- if @gcloudtrace_sample_factor -%>
-  --gcloudtrace.sample-factor=<%=@gcloudtrace_sample_factor%> \
-<%- end -%>
 <%- if @http_address -%>
   --http-address=<%=@http_address%> \
 <%- end -%>
