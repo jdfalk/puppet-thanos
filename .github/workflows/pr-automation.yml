@@ -1,0 +1,80 @@
+# file: .github/workflows/pr-automation.yml
+# version: 2.0.0
+# guid: a7b8c9d0-e1f2-3456-a789-0123456789bc
+
+name: PR Automation
+
+on:
+  pull_request:
+    types: [opened, edited, synchronize, reopened, labeled, unlabeled]
+  pull_request_target:
+    types: [opened, edited, synchronize, reopened]
+
+permissions:
+  contents: write
+  pull-requests: write
+  issues: write
+  checks: write
+  statuses: write
+  security-events: write
+  actions: read
+
+jobs:
+  # Enhanced super linter with comprehensive language support
+  super-linter:
+    name: Code Quality Check
+    uses: jdfalk/ghcommon/.github/workflows/reusable-super-linter.yml@main
+    with:
+      validate-all-codebase: false
+      default-branch: ${{ github.event.repository.default_branch }}
+      filter-regex-exclude: ".*\\.git/.*|.*\\.github/copilot/.*|.*\\.vscode/.*|.*node_modules/.*|.*\\.cache/.*|.*vendor/.*|.*dist/.*"
+      run-python: true
+      run-shell: true
+      run-markdown: true
+      run-yaml: true
+      run-json: true
+      run-javascript: true
+      run-go: false
+      run-github-actions: true
+      run-security: true
+      enable-auto-fix: true
+      auto-commit-fixes: true
+    secrets: inherit
+
+  # Unified automation for issue management and docs
+  unified-automation:
+    name: Unified PR Automation
+    uses: jdfalk/ghcommon/.github/workflows/reusable-unified-automation.yml@main
+    with:
+      operation: "all"
+      im_operations: "auto"
+      im_dry_run: false
+      im_force_update: false
+      im_cleanup_issue_updates: true
+      docs_dry_run: false
+      docs_cleanup_processed_files: true
+      docs_create_pr: false
+      docs_auto_merge: false
+      docs_continue_on_error: true
+      labeler_sync_labels: true
+      labeler_dot: true
+    secrets: inherit
+
+  # Intelligent issue labeling for PRs
+  intelligent-labeling:
+    name: Intelligent Labeling
+    uses: jdfalk/ghcommon/.github/workflows/reusable-intelligent-issue-labeling.yml@main
+    with:
+      dry_run: false
+      python_version: "3.11"
+    secrets: inherit
+
+  # Standard labeler based on file patterns
+  standard-labeler:
+    name: Standard File-based Labeling
+    uses: jdfalk/ghcommon/.github/workflows/reusable-labeler.yml@main
+    with:
+      configuration-path: ".github/labeler.yml"
+      sync-labels: true
+      dot: true
+    secrets: inherit

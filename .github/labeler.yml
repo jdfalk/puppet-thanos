@@ -1,0 +1,62 @@
+# file: .github/labeler.yml
+# version: 1.0.0
+# guid: 5a6b7c8d-9e0f-1234-5678-90abcdef1234
+
+# Documentation
+documentation:
+  - changed-files:
+    - any-glob-to-any-file:
+      - '**/*.md'
+      - 'docs/**/*'
+
+# Configuration
+configuration:
+  - changed-files:
+    - any-glob-to-any-file:
+      - '**/*.yml'
+      - '**/*.yaml'
+      - '**/*.json'
+      - '**/*.toml'
+      - '**/*.ini'
+      - '**/*.conf'
+      - '**/Dockerfile*'
+      - '**/.env*'
+
+# Scripts
+scripts:
+  - changed-files:
+    - any-glob-to-any-file:
+      - '**/*.sh'
+      - '**/*.py'
+      - 'scripts/**/*'
+
+# GitHub Actions
+github-actions:
+  - changed-files:
+    - any-glob-to-any-file:
+      - '.github/workflows/**/*'
+      - '.github/actions/**/*'
+
+# Dependencies
+dependencies:
+  - changed-files:
+    - any-glob-to-any-file:
+      - '**/go.mod'
+      - '**/go.sum'
+      - '**/package.json'
+      - '**/package-lock.json'
+      - '**/yarn.lock'
+      - '**/requirements.txt'
+      - '**/Pipfile*'
+      - '**/poetry.lock'
+      - '**/pyproject.toml'
+
+# Security
+security:
+  - changed-files:
+    - any-glob-to-any-file:
+      - '**/.github/workflows/**'
+      - '**/Dockerfile*'
+      - '**/*security*'
+      - '**/*auth*'
+      - '**/*secret*'
