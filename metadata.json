@@ -1,10 +1,11 @@
 {
   "name": "jdfalk-thanos",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "author": "jdfalk",
-  "summary": "Puppet module for Thanos: Highly available Prometheus setup with long term storage capabilities.",
+  "summary": "DEPRECATED: Use maeq/thanos instead. This module is no longer maintained.",
   "license": "Apache-2.0",
   "source": "https://github.com/jdfalk/puppet-thanos.git",
+  "deprecated": true,
   "dependencies": [
     {
       "name": "puppetlabs/stdlib",
