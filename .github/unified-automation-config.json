@@ -1,0 +1,87 @@
+{
+  "_comment": "Default Unified Automation Configuration",
+  "_description": "This file contains all default values for the unified automation orchestrator. Copy and modify as needed for your repository.",
+  "_version": "1.1.0",
+  "_guid": "auto-config-12345-67890-abcdef",
+
+  "issue_management": {
+    "operations": "auto",
+    "dry_run": false,
+    "force_update": false,
+    "issue_updates_file": "issue_updates.json",
+    "issue_updates_directory": ".github/issue-updates",
+    "cleanup_issue_updates": true,
+    "python_version": "3.11",
+    "enable_duplicate_prevention": true,
+    "enable_duplicate_closure": true,
+    "duplicate_prevention_method": "guid_and_title",
+    "max_duplicate_check_issues": 1000,
+    "auto_close_duplicates": true,
+    "duplicate_selection_strategy": "oldest_with_most_activity"
+  },
+
+  "docs_update": {
+    "updates_directory": ".github/doc-updates",
+    "dry_run": false,
+    "python_version": "3.11",
+    "cleanup_processed_files": true,
+    "create_pr": false,
+    "auto_merge": false,
+    "continue_on_error": true
+  },
+
+  "labeler": {
+    "configuration_path": ".github/labeler.yml",
+    "sync_labels": false,
+    "dot": true,
+    "pr_numbers": ""
+  },
+
+  "super_linter": {
+    "validate_all_codebase": false,
+    "default_branch": "main",
+    "config_file": ".github/super-linter.env",
+    "run_python": true,
+    "run_shell": true,
+    "run_markdown": true,
+    "run_yaml": true,
+    "run_json": true,
+    "run_javascript": true,
+    "run_go": true,
+    "run_css": true,
+    "run_html": true,
+    "run_github_actions": true,
+    "run_security": true,
+    "enable_auto_fix": true,
+    "auto_commit_fixes": true,
+    "commit_message": "style: auto-fix linting issues [skip ci]"
+  },
+
+  "intelligent_labeling": {
+    "enabled": true,
+    "dry_run": false,
+    "batch_size": 10,
+    "use_ai_fallback": true,
+    "confidence_threshold": 0.7,
+    "max_labels_per_issue": 8,
+    "preserve_existing_labels": true,
+    "label_config_path": ".github/intelligent-labeling.yml",
+    "python_version": "3.11"
+  },
+
+  "workflow_settings": {
+    "fail_fast": false,
+    "max_parallel_jobs": 4,
+    "timeout_minutes": 30,
+    "retry_on_failure": true,
+    "retry_attempts": 2
+  },
+
+  "notification_settings": {
+    "notify_on_success": false,
+    "notify_on_failure": true,
+    "include_summary": true,
+    "mention_users": [],
+    "slack_webhook": null
+  }
+}
