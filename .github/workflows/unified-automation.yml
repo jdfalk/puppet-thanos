@@ -1,0 +1,215 @@
+# file: examples/workflows/unified-automation-complete.yml
+# version: 2.1.0
+# guid: complete-unified-automation-workflow-template
+
+name: Complete Unified Automation
+
+# Comprehensive permissions for all automation features
+permissions:
+  contents: write # For creating commits and PRs
+  issues: write # For creating and updating issues
+  pull-requests: write # For creating PRs
+  security-events: read # For reading CodeQL alerts
+  repository-projects: write # For adding items to projects
+  actions: read # For workflow access
+  checks: write # For workflow status
+  statuses: write # For commit status updates
+
+on:
+  # Triggered manually with customizable options
+  workflow_dispatch:
+    inputs:
+      operation:
+        description: "Which operation(s) to run"
+        required: false
+        default: "all"
+        type: choice
+        options:
+          - "all"
+          - "issues"
+          - "docs"
+          - "label"
+          - "lint"
+          - "intelligent-labeling"
+
+      config_file:
+        description: "Path to configuration file (optional)"
+        required: false
+        default: ".github/unified-automation-config.json"
+        type: string
+
+      dry_run:
+        description: "Run in dry-run mode (no changes made)"
+        required: false
+        default: false
+        type: boolean
+
+  # Automatic triggers for common scenarios
+  push:
+    branches: [main, develop]
+    paths:
+      - ".github/issue-updates/**"
+      - ".github/doc-updates/**"
+      - "issue_updates.json"
+
+  schedule:
+    # Run maintenance tasks daily at 2 AM UTC
+    - cron: "0 2 * * *"
+
+  # Handle issue and PR events
+  issues:
+    types: [opened, edited, labeled]
+
+  pull_request:
+    types: [opened, synchronize, labeled]
+
+jobs:
+  # Load configuration from file if provided
+  load-config:
+    runs-on: ubuntu-latest
+    outputs:
+      config: ${{ steps.load.outputs.config }}
+      operation: ${{ steps.determine.outputs.operation }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Load configuration file
+        id: load
+        run: |
+          CONFIG_FILE="${{ github.event.inputs.config_file || '.github/unified-automation-config.json' }}"
+
+          if [[ -f "$CONFIG_FILE" ]]; then
+            echo "📄 Loading configuration from $CONFIG_FILE"
+            CONFIG=$(cat "$CONFIG_FILE" | jq -c .)
+            echo "config=$CONFIG" >> "$GITHUB_OUTPUT"
+            echo "✅ Configuration loaded successfully"
+          else
+            echo "📄 Configuration file not found, downloading default from ghcommon..."
+            curl -fsSL https://raw.githubusercontent.com/jdfalk/ghcommon/main/.github/unified-automation-config.json -o default-config.json
+            CONFIG=$(cat default-config.json | jq -c .)
+            echo "config=$CONFIG" >> "$GITHUB_OUTPUT"
+            echo "✅ Default configuration loaded"
+          fi
+
+      - name: Determine operation
+        id: determine
+        run: |
+          OPERATION="${{ github.event.inputs.operation || 'all' }}"
+
+          # Auto-detect operation based on event type and changed files
+          if [[ "$OPERATION" == "all" && "${{ github.event_name }}" != "workflow_dispatch" ]]; then
+            case "${{ github.event_name }}" in
+              "push")
+                if git diff --name-only HEAD~1 | grep -E '\\.github/(issue|doc)-updates/|issue_updates\\.json'; then
+                  OPERATION="issues"
+                fi
+                ;;
+              "issues"|"pull_request")
+                OPERATION="intelligent-labeling"
+                ;;
+              "schedule")
+                OPERATION="all"
+                ;;
+            esac
+          fi
+
+          echo "operation=$OPERATION" >> "$GITHUB_OUTPUT"
+          echo "🎯 Selected operation: $OPERATION"
+
+  # Main automation orchestrator
+  unified-automation:
+    needs: load-config
+    uses: jdfalk/ghcommon/.github/workflows/reusable-unified-automation.yml@main
+    with:
+      operation: ${{ needs.load-config.outputs.operation }}
+
+      # Issue Management Configuration
+      im_operations: ${{ fromJson(needs.load-config.outputs.config).issue_management.operations }}
+      im_dry_run: ${{ github.event.inputs.dry_run == 'true' || fromJson(needs.load-config.outputs.config).issue_management.dry_run }}
+      im_force_update: ${{ fromJson(needs.load-config.outputs.config).issue_management.force_update }}
+      im_issue_updates_file: ${{ fromJson(needs.load-config.outputs.config).issue_management.issue_updates_file }}
+      im_issue_updates_directory: ${{ fromJson(needs.load-config.outputs.config).issue_management.issue_updates_directory }}
+      im_cleanup_issue_updates: ${{ fromJson(needs.load-config.outputs.config).issue_management.cleanup_issue_updates }}
+      im_python_version: ${{ fromJson(needs.load-config.outputs.config).issue_management.python_version }}
+
+      # Documentation Update Configuration
+      docs_updates_directory: ${{ fromJson(needs.load-config.outputs.config).docs_update.updates_directory }}
+      docs_dry_run: ${{ github.event.inputs.dry_run == 'true' || fromJson(needs.load-config.outputs.config).docs_update.dry_run }}
+      docs_python_version: ${{ fromJson(needs.load-config.outputs.config).docs_update.python_version }}
+      docs_cleanup_processed_files: ${{ fromJson(needs.load-config.outputs.config).docs_update.cleanup_processed_files }}
+      docs_create_pr: ${{ fromJson(needs.load-config.outputs.config).docs_update.create_pr }}
+      docs_auto_merge: ${{ fromJson(needs.load-config.outputs.config).docs_update.auto_merge }}
+      docs_continue_on_error: ${{ fromJson(needs.load-config.outputs.config).docs_update.continue_on_error }}
+
+      # Labeler Configuration
+      labeler_configuration_path: ${{ fromJson(needs.load-config.outputs.config).labeler.configuration_path }}
+      labeler_sync_labels: ${{ fromJson(needs.load-config.outputs.config).labeler.sync_labels }}
+      labeler_dot: ${{ fromJson(needs.load-config.outputs.config).labeler.dot }}
+      labeler_pr_numbers: ${{ fromJson(needs.load-config.outputs.config).labeler.pr_numbers }}
+
+      # Super Linter Configuration
+      sl_validate_all_codebase: ${{ fromJson(needs.load-config.outputs.config).super_linter.validate_all_codebase }}
+      sl_default_branch: ${{ fromJson(needs.load-config.outputs.config).super_linter.default_branch }}
+      sl_config_file: ${{ fromJson(needs.load-config.outputs.config).super_linter.config_file }}
+      sl_run_python: ${{ fromJson(needs.load-config.outputs.config).super_linter.run_python }}
+      sl_run_shell: ${{ fromJson(needs.load-config.outputs.config).super_linter.run_shell }}
+      sl_run_markdown: ${{ fromJson(needs.load-config.outputs.config).super_linter.run_markdown }}
+      sl_run_yaml: ${{ fromJson(needs.load-config.outputs.config).super_linter.run_yaml }}
+      sl_run_json: ${{ fromJson(needs.load-config.outputs.config).super_linter.run_json }}
+      sl_run_javascript: ${{ fromJson(needs.load-config.outputs.config).super_linter.run_javascript }}
+      sl_run_go: ${{ fromJson(needs.load-config.outputs.config).super_linter.run_go }}
+      sl_run_css: ${{ fromJson(needs.load-config.outputs.config).super_linter.run_css }}
+      sl_run_html: ${{ fromJson(needs.load-config.outputs.config).super_linter.run_html }}
+      sl_run_github_actions: ${{ fromJson(needs.load-config.outputs.config).super_linter.run_github_actions }}
+      sl_run_security: ${{ fromJson(needs.load-config.outputs.config).super_linter.run_security }}
+      sl_enable_auto_fix: ${{ fromJson(needs.load-config.outputs.config).super_linter.enable_auto_fix }}
+      sl_auto_commit_fixes: ${{ fromJson(needs.load-config.outputs.config).super_linter.auto_commit_fixes }}
+      sl_commit_message: ${{ fromJson(needs.load-config.outputs.config).super_linter.commit_message }}
+
+      # Intelligent Labeling Configuration
+      il_enabled: ${{ fromJson(needs.load-config.outputs.config).intelligent_labeling.enabled }}
+      il_dry_run: ${{ github.event.inputs.dry_run == 'true' || fromJson(needs.load-config.outputs.config).intelligent_labeling.dry_run }}
+      il_batch_size: ${{ fromJson(needs.load-config.outputs.config).intelligent_labeling.batch_size }}
+      il_use_ai_fallback: ${{ fromJson(needs.load-config.outputs.config).intelligent_labeling.use_ai_fallback }}
+      il_confidence_threshold: ${{ fromJson(needs.load-config.outputs.config).intelligent_labeling.confidence_threshold }}
+      il_max_labels_per_issue: ${{ fromJson(needs.load-config.outputs.config).intelligent_labeling.max_labels_per_issue }}
+      il_preserve_existing_labels: ${{ fromJson(needs.load-config.outputs.config).intelligent_labeling.preserve_existing_labels }}
+      il_label_config_path: ${{ fromJson(needs.load-config.outputs.config).intelligent_labeling.label_config_path }}
+      il_python_version: ${{ fromJson(needs.load-config.outputs.config).intelligent_labeling.python_version }}
+
+    secrets: inherit
+
+  # Post-automation cleanup and notifications
+  post-automation:
+    needs: [load-config, unified-automation]
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Generate automation summary
+        run: |
+          echo "## 🤖 Unified Automation Summary" >> "$GITHUB_STEP_SUMMARY"
+          echo "" >> "$GITHUB_STEP_SUMMARY"
+          echo "**Operation:** ${{ needs.load-config.outputs.operation }}" >> "$GITHUB_STEP_SUMMARY"
+          echo "**Event:** ${{ github.event_name }}" >> "$GITHUB_STEP_SUMMARY"
+          echo "**Repository:** ${{ github.repository }}" >> "$GITHUB_STEP_SUMMARY"
+          echo "**Status:** ${{ needs.unified-automation.result }}" >> "$GITHUB_STEP_SUMMARY"
+          echo "**Dry Run:** ${{ github.event.inputs.dry_run || 'false' }}" >> "$GITHUB_STEP_SUMMARY"
+          echo "" >> "$GITHUB_STEP_SUMMARY"
+
+          if [[ "${{ needs.unified-automation.result }}" == "success" ]]; then
+            echo "✅ All automation tasks completed successfully!" >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "❌ Some automation tasks encountered issues. Check the logs above for details." >> "$GITHUB_STEP_SUMMARY"
+          fi
+
+          echo "" >> "$GITHUB_STEP_SUMMARY"
+          echo "### 📊 Configuration Used" >> "$GITHUB_STEP_SUMMARY"
+          echo "Configuration was loaded from: \`${{ github.event.inputs.config_file || '.github/unified-automation-config.json' }}\`" >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Notify on failure
+        if: failure() && fromJson(needs.load-config.outputs.config).notification_settings.notify_on_failure
+        run: |
+          echo "🚨 Automation failed - implement notification logic here"
+          # Add your notification logic (Slack, Teams, email, etc.)
