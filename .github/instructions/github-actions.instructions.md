@@ -1,8 +1,10 @@
 <!-- file: .github/instructions/github-actions.instructions.md -->
-<!-- version: 1.1.0 -->
+<!-- version: 1.2.0 -->
 <!-- guid: 9f8e7d6c-5b4a-3c2d-1e0f-9a8b7c6d5e4f -->
 <!-- DO NOT EDIT: This file is managed centrally in ghcommon repository -->
 <!-- To update: Create an issue/PR in jdfalk/ghcommon -->
+
+---
 
 applyTo: ".github/workflows/\*.{yml,yaml}"
 description: |
@@ -133,7 +135,7 @@ jobs:
 
 ```yaml
 env:
-  NODE_VERSION: "20"
+  NODE_VERSION: '20'
 
 jobs:
   build:
@@ -142,7 +144,7 @@ jobs:
     steps:
       - name: Use specific variable
         env:
-          SPECIFIC_VAR: "value"
+          SPECIFIC_VAR: 'value'
         run: echo $SPECIFIC_VAR
 ```
 

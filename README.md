@@ -33,9 +33,9 @@ class { 'thanos':
 
 ### Links
 
-- **Puppet Forge**: https://forge.puppet.com/maeq/thanos
-- **GitHub Repository**: https://github.com/syberalexis/puppet-thanos
-- **Documentation**: https://github.com/syberalexis/puppet-thanos/blob/master/README.md
+- **Puppet Forge**: <https://forge.puppet.com/maeq/thanos>
+- **GitHub Repository**: <https://github.com/syberalexis/puppet-thanos>
+- **Documentation**: <https://github.com/syberalexis/puppet-thanos/blob/master/README.md>
 
 ---
 

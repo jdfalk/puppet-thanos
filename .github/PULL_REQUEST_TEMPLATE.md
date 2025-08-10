@@ -17,7 +17,8 @@ Brief overview of the entire PR and its purpose
 - [`path/to/file1.ext`](./path/to/file1.ext) - Description of changes
 - [`path/to/file2.ext`](./path/to/file2.ext) - Description of changes
 
-_Note: Omit issue numbers from section headers if not working on specific issues. Use `type(scope): description` format instead._
+_Note: Omit issue numbers from section headers if not working on specific
+issues. Use `type(scope): description` format instead._
 
 ## Testing
 
@@ -38,7 +39,8 @@ Any additional context, screenshots, or important information
 - [ ] Code has been commented, particularly in hard-to-understand areas
 - [ ] Corresponding changes to documentation have been made
 - [ ] Changes generate no new warnings
-- [ ] Tests have been added that prove the fix is effective or that the feature works
+- [ ] Tests have been added that prove the fix is effective or that the feature
+      works
 - [ ] New and existing unit tests pass locally with the changes
 
 ## Related Issues

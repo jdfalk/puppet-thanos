@@ -1,8 +1,10 @@
 <!-- file: .github/instructions/typescript.instructions.md -->
-<!-- version: 1.1.0 -->
-<!-- guid: 8f4a3c5d-6e7b-5d9f-0a1b-2c3d4e5f6a7b -->
+<!-- version: 1.2.0 -->
+<!-- guid: ts123456-e89b-12d3-a456-426614174000 -->
 <!-- DO NOT EDIT: This file is managed centrally in ghcommon repository -->
 <!-- To update: Create an issue/PR in jdfalk/ghcommon -->
+
+---
 
 applyTo: "\*_/_.ts"
 description: |

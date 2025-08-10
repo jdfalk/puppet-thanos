@@ -1,8 +1,10 @@
 <!-- file: .github/instructions/go.instructions.md -->
-<!-- version: 1.1.0 -->
-<!-- guid: 8f4a3c5d-6e7b-5d9f-0a1b-2c3d4e5f6a7b -->
+<!-- version: 1.2.0 -->
+<!-- guid: 4f5a6b7c-8d9e-0f1a-2b3c-4d5e6f7a8b9c -->
 <!-- DO NOT EDIT: This file is managed centrally in ghcommon repository -->
 <!-- To update: Create an issue/PR in jdfalk/ghcommon -->
+
+---
 
 applyTo: "\*_/_.go"
 description: |

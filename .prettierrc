@@ -1,0 +1,52 @@
+{
+  "semi": true,
+  "trailingComma": "es5",
+  "singleQuote": true,
+  "printWidth": 80,
+  "tabWidth": 2,
+  "useTabs": false,
+  "bracketSpacing": true,
+  "bracketSameLine": false,
+  "arrowParens": "avoid",
+  "endOfLine": "lf",
+  "overrides": [
+    {
+      "files": "*.md",
+      "options": { "proseWrap": "always", "printWidth": 80 }
+    },
+    {
+      "files": ["*.yaml", "*.yml"],
+      "options": {
+        "tabWidth": 2,
+        "singleQuote": false,
+        "printWidth": 120,
+        "bracketSpacing": true,
+        "proseWrap": "preserve"
+      }
+    },
+    {
+      "files": ["*.instructions.md", "**/instructions/*.md"],
+      "options": {
+        "proseWrap": "preserve",
+        "printWidth": 120,
+        "tabWidth": 2
+      }
+    },
+    {
+      "files": "*.json",
+      "options": { "tabWidth": 2, "useTabs": false, "printWidth": 80 }
+    },
+    {
+      "files": ["*.css", "*.scss", "*.less"],
+      "options": { "tabWidth": 2, "singleQuote": false, "printWidth": 80 }
+    },
+    {
+      "files": ["*.html", "*.htm"],
+      "options": { "tabWidth": 2, "singleQuote": false, "printWidth": 80 }
+    },
+    {
+      "files": "*.graphql",
+      "options": { "tabWidth": 2, "printWidth": 80 }
+    }
+  ]
+}

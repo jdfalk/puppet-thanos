@@ -5,58 +5,58 @@
 # Documentation
 documentation:
   - changed-files:
-    - any-glob-to-any-file:
-      - '**/*.md'
-      - 'docs/**/*'
+      - any-glob-to-any-file:
+          - "**/*.md"
+          - "docs/**/*"
 
 # Configuration
 configuration:
   - changed-files:
-    - any-glob-to-any-file:
-      - '**/*.yml'
-      - '**/*.yaml'
-      - '**/*.json'
-      - '**/*.toml'
-      - '**/*.ini'
-      - '**/*.conf'
-      - '**/Dockerfile*'
-      - '**/.env*'
+      - any-glob-to-any-file:
+          - "**/*.yml"
+          - "**/*.yaml"
+          - "**/*.json"
+          - "**/*.toml"
+          - "**/*.ini"
+          - "**/*.conf"
+          - "**/Dockerfile*"
+          - "**/.env*"
 
 # Scripts
 scripts:
   - changed-files:
-    - any-glob-to-any-file:
-      - '**/*.sh'
-      - '**/*.py'
-      - 'scripts/**/*'
+      - any-glob-to-any-file:
+          - "**/*.sh"
+          - "**/*.py"
+          - "scripts/**/*"
 
 # GitHub Actions
 github-actions:
   - changed-files:
-    - any-glob-to-any-file:
-      - '.github/workflows/**/*'
-      - '.github/actions/**/*'
+      - any-glob-to-any-file:
+          - ".github/workflows/**/*"
+          - ".github/actions/**/*"
 
 # Dependencies
 dependencies:
   - changed-files:
-    - any-glob-to-any-file:
-      - '**/go.mod'
-      - '**/go.sum'
-      - '**/package.json'
-      - '**/package-lock.json'
-      - '**/yarn.lock'
-      - '**/requirements.txt'
-      - '**/Pipfile*'
-      - '**/poetry.lock'
-      - '**/pyproject.toml'
+      - any-glob-to-any-file:
+          - "**/go.mod"
+          - "**/go.sum"
+          - "**/package.json"
+          - "**/package-lock.json"
+          - "**/yarn.lock"
+          - "**/requirements.txt"
+          - "**/Pipfile*"
+          - "**/poetry.lock"
+          - "**/pyproject.toml"
 
 # Security
 security:
   - changed-files:
-    - any-glob-to-any-file:
-      - '**/.github/workflows/**'
-      - '**/Dockerfile*'
-      - '**/*security*'
-      - '**/*auth*'
-      - '**/*secret*'
+      - any-glob-to-any-file:
+          - "**/.github/workflows/**"
+          - "**/Dockerfile*"
+          - "**/*security*"
+          - "**/*auth*"
+          - "**/*secret*"

@@ -1,8 +1,10 @@
 <!-- file: .github/instructions/protobuf.instructions.md -->
-<!-- version: 2.1.0 -->
+<!-- version: 2.2.0 -->
 <!-- guid: 7d6c5b4a-3c2d-1e0f-9a8b-7c6d5e4f3a2b -->
 <!-- DO NOT EDIT: This file is managed centrally in ghcommon repository -->
 <!-- To update: Create an issue/PR in jdfalk/ghcommon -->
+
+---
 
 applyTo: "\*_/_.proto"
 description: |
@@ -15,14 +17,19 @@ Protocol Buffers (protobuf) style and documentation rules for Copilot/AI agents 
 ## Core Principles
 
 - Follow the [general coding instructions](general-coding.instructions.md)
-- Follow the [Google Protobuf Style Guide](https://protobuf.dev/programming-guides/style/)
-- Implement the [1-1-1 Best Practice](https://protobuf.dev/best-practices/1-1-1/) - one top-level entity per file
-- Use [Edition 2023](https://protobuf.dev/programming-guides/editions/) for all new files
+- Follow the
+  [Google Protobuf Style Guide](https://protobuf.dev/programming-guides/style/)
+- Implement the
+  [1-1-1 Best Practice](https://protobuf.dev/best-practices/1-1-1/) - one
+  top-level entity per file
+- Use [Edition 2023](https://protobuf.dev/programming-guides/editions/) for all
+  new files
 - Follow [Proto Best Practices](https://protobuf.dev/best-practices/dos-donts/)
 
 ## Required File Header
 
-All protobuf files must begin with a standard header as described in the [general coding instructions](general-coding.instructions.md):
+All protobuf files must begin with a standard header as described in the
+[general coding instructions](general-coding.instructions.md):
 
 ```protobuf
 // file: path/to/file.proto
@@ -38,7 +45,8 @@ option go_package = "github.com/owner/repo/path/to/package;packagepb";
 
 ## Edition 2023 Requirements
 
-- **MANDATORY**: All proto files MUST use `edition = "2023";` as the first non-comment line
+- **MANDATORY**: All proto files MUST use `edition = "2023";` as the first
+  non-comment line
 - Enhanced features with better defaults and future-proofing
 - Improved validation and hybrid API support
 - Better backwards compatibility with proto2/proto3
@@ -221,7 +229,8 @@ service UserService {
 
 ### Purpose
 
-The `types/` directory contains fundamental, reusable types imported by other protobuf files.
+The `types/` directory contains fundamental, reusable types imported by other
+protobuf files.
 
 ### Implementation Pattern
 
@@ -273,7 +282,8 @@ string status = 4 [default = "pending"];
 
 **CRITICAL: Edition 2023 Field Presence Rules**
 
-In Edition 2023, the `optional` label is **NOT ALLOWED**. Instead, use `option features.field_presence` to control field presence:
+In Edition 2023, the `optional` label is **NOT ALLOWED**. Instead, use
+`option features.field_presence` to control field presence:
 
 ```protobuf
 // ❌ WRONG - Do NOT use 'optional' label in Edition 2023
@@ -579,4 +589,6 @@ service AdminService {
 }
 ```
 
-This comprehensive protobuf instruction set ensures consistent, maintainable, and scalable protobuf definitions across all projects while following Google's best practices and modern Edition 2023 features.
+This comprehensive protobuf instruction set ensures consistent, maintainable,
+and scalable protobuf definitions across all projects while following Google's
+best practices and modern Edition 2023 features.

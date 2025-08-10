@@ -1,0 +1,13 @@
+# Prettier ignore file
+
+# GitHub folder with copilot instructions that contain examples
+.github/copilot-instructions.md
+
+# Instruction files with YAML frontmatter
+.github/instructions/*.md
+**/*.instructions.md
+
+# Generated files
+workflow-permissions-analysis.json
+**/doc-updates/*.json
+**/processed/*.json
