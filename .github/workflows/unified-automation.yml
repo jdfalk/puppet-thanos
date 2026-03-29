@@ -82,7 +82,7 @@ on:
 
 jobs:
   automation:
-    uses: jdfalk/ghcommon/.github/workflows/reusable-unified-automation.yml@main
+    uses: jdfalk/ghcommon/.github/workflows/reusable-unified-automation.yml@378e23a96c00d719075732dd2af4de45f7523cbb # v1.10.4
     with:
       operation: ${{ github.event.inputs.operation || 'all' }}
 

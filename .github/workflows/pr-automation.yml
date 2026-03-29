@@ -23,7 +23,7 @@ jobs:
   # Enhanced super linter with comprehensive language support
   super-linter:
     name: Code Quality Check
-    uses: jdfalk/ghcommon/.github/workflows/reusable-super-linter.yml@main
+    uses: jdfalk/ghcommon/.github/workflows/reusable-super-linter.yml@378e23a96c00d719075732dd2af4de45f7523cbb # v1.10.4
     with:
       validate-all-codebase: false
       default-branch: ${{ github.event.repository.default_branch }}
@@ -44,7 +44,7 @@ jobs:
   # Unified automation for issue management and docs
   unified-automation:
     name: Unified PR Automation
-    uses: jdfalk/ghcommon/.github/workflows/reusable-unified-automation.yml@main
+    uses: jdfalk/ghcommon/.github/workflows/reusable-unified-automation.yml@378e23a96c00d719075732dd2af4de45f7523cbb # v1.10.4
     with:
       operation: "all"
       im_operations: "auto"
@@ -63,7 +63,7 @@ jobs:
   # Intelligent issue labeling for PRs
   intelligent-labeling:
     name: Intelligent Labeling
-    uses: jdfalk/ghcommon/.github/workflows/reusable-intelligent-issue-labeling.yml@main
+    uses: jdfalk/ghcommon/.github/workflows/reusable-intelligent-issue-labeling.yml@378e23a96c00d719075732dd2af4de45f7523cbb # v1.10.4
     with:
       dry_run: false
       python_version: "3.11"
@@ -72,7 +72,7 @@ jobs:
   # Standard labeler based on file patterns
   standard-labeler:
     name: Standard File-based Labeling
-    uses: jdfalk/ghcommon/.github/workflows/reusable-labeler.yml@main
+    uses: jdfalk/ghcommon/.github/workflows/reusable-labeler.yml@378e23a96c00d719075732dd2af4de45f7523cbb # v1.10.4
     with:
       configuration-path: ".github/labeler.yml"
       sync-labels: true
